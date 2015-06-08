@@ -6,6 +6,9 @@
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
+;; activate installed packages
+(package-initialize)
+
 (defun ensure-package-installed (&rest packages)
   "Assure every package is installed, ask for installation if it’s not.
 
@@ -26,9 +29,13 @@ Return a list of installed packages or nil for every skipped package."
     (package-refresh-contents))
 
 (ensure-package-installed 'magit
+                          'merlin
+                          'utop
+                          'undo-tree
                           'cider
                           'haskell-mode
                           'scala-mode2
+                          'lush-theme
                           'haskell-snippets
                           'ghc
                           'org
@@ -141,8 +148,11 @@ Return a list of installed packages or nil for every skipped package."
 
 ;; OCaml
 ;; Add opam emacs directory to the load-path
-(setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
-(add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
+
+;;(setq opam-config (shell-command-to-string "opam config var share 2> /dev/null"))
+;; (when (not (eq opam-config ""))
+;;   (setq opam-share (substring opam-config 0 -1))
+;;   (add-to-list 'load-path (concat opam-share "/emacs/site-lisp")))
 ;; Load merlin-mode
 (require 'merlin)
 (require 'utop)
