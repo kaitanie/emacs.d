@@ -150,7 +150,7 @@ Return a list of installed packages or nil for every skipped package."
 ;; Add opam emacs directory to the load-path
 
 (setq opam-config (shell-command-to-string "opam config var share 2> /dev/null"))
- (when (not (eq opam-config ""))
+ (when (not (string-equal opam-config ""))
    (setq opam-share (substring opam-config 0 -1))
    (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
    ;; Load merlin-mode
