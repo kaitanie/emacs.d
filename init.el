@@ -36,6 +36,8 @@ Return a list of installed packages or nil for every skipped package."
                           'haskell-mode
                           'scala-mode2
                           'lush-theme
+                          'opam
+                          'systemd
                           'haskell-snippets
                           'ghc
                           'org
