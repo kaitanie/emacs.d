@@ -1,3 +1,5 @@
+(require 'cl)
+
 ;; ELPA/MELPA
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
@@ -29,7 +31,6 @@ Return a list of installed packages or nil for every skipped package."
     (package-refresh-contents))
 
 (ensure-package-installed 'magit
-                          'merlin
                           'utop
                           'undo-tree
                           'cider
