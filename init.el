@@ -30,29 +30,29 @@ Return a list of installed packages or nil for every skipped package."
 (or (file-exists-p package-user-dir)
     (package-refresh-contents))
 
-(ensure-package-installed 'magit
-                          'utop
-                          'undo-tree
-                          'cider
-                          'haskell-mode
-                          'scala-mode2
-                          'lush-theme
-                          'opam
-                          'systemd
-                          'haskell-snippets
-                          'ghc
-                          'org
-                          'clojure-snippets
-                          'lusty-explorer
-                          'paredit
-                          'company
-                          'company-cabal
-                          'company-ghc
-                          'company-ghci
-                          'rainbow-mode)
-
-;; activate installed packages
-(package-initialize)
+(let ((installation-results (ensure-package-installed 'magit
+                                                      'utop
+                                                      'undo-tree
+                                                      'cider
+                                                      'haskell-mode
+                                                      'scala-mode2
+                                                      'lush-theme
+                                                      'opam
+                                                      'systemd
+                                                      'haskell-snippets
+                                                      'ghc
+                                                      'org
+                                                      'clojure-snippets
+                                                      'lusty-explorer
+                                                      'paredit
+                                                      'company
+                                                      'company-cabal
+                                                      'company-ghc
+                                                      'company-ghci
+                                                      'rainbow-mode)))
+  (when (delq 'nil installation-results)
+    ;; activate newly installed packages
+    (package-initialize)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
