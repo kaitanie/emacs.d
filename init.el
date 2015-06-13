@@ -34,6 +34,8 @@ Return a list of installed packages or nil for every skipped package."
                                                       'utop
                                                       'undo-tree
                                                       'cider
+                                                      'clojure-mode
+                                                      'typed-clojure-mode
                                                       'haskell-mode
                                                       'scala-mode2
                                                       'lush-theme
@@ -44,6 +46,7 @@ Return a list of installed packages or nil for every skipped package."
                                                       'org
                                                       'clojure-snippets
                                                       'lusty-explorer
+                                                      'xkcd
                                                       'paredit
                                                       'company
                                                       'company-cabal
