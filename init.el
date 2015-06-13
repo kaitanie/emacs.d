@@ -34,6 +34,7 @@ Return a list of installed packages or nil for every skipped package."
                                                       'utop
                                                       'undo-tree
                                                       'cider
+                                                      'clj-refactor
                                                       'haskell-mode
                                                       'scala-mode2
                                                       'lush-theme
@@ -41,11 +42,14 @@ Return a list of installed packages or nil for every skipped package."
                                                       'systemd
                                                       'haskell-snippets
                                                       'ghc
+                                                      'hamlet-mode
                                                       'org
                                                       'clojure-snippets
                                                       'lusty-explorer
                                                       'paredit
                                                       'company
+                                                      'hackernews
+                                                      'gist
                                                       'company-cabal
                                                       'company-ghc
                                                       'company-ghci
@@ -132,7 +136,15 @@ Return a list of installed packages or nil for every skipped package."
 (require 'rainbow-mode)
 (require 'paredit)
 (require 'cider)
-(add-hook 'clojure-mode-hook 'turn-on-paredit)
+(require 'clj-refactor)
+
+(defun my-clojure-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import
+    (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+(add-hook 'clojure-mode-hook #'turn-on-paredit)
 (add-hook 'cider-repl-mode-hook #'company-mode)
 (add-hook 'cider-mode-hook #'company-mode)
 (add-hook 'cider-repl-mode-hook #'rainbow-mode)
