@@ -152,13 +152,15 @@ Return a list of installed packages or nil for every skipped package."
 ;; OCaml
 ;; Add opam emacs directory to the load-path
 
-(setq opam-config (shell-command-to-string "opam config var share 2> /dev/null"))
- (when (not (string-equal opam-config ""))
-   (setq opam-share (substring opam-config 0 -1))
-   (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
-   ;; Load merlin-mode
-   (require 'merlin)
-   (require 'utop))
+;; Add Opam site-lisp directory to load-path to use Emacs Lisp
+;; programs installed using Opam (the OCaml package manager) if Opam
+;; is installed.
+(let ((opam-config (shell-command-to-string "opam config var share 2> /dev/null")))
+  (when (not (string-equal opam-config ""))
+    (let ((opam-share (substring opam-config 0 -1)))
+      (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
+      (require 'merlin)
+      (require 'utop))))
 
 ;; Start merlin on ocaml files
 (add-hook 'tuareg-mode-hook 'merlin-mode t)
