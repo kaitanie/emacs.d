@@ -242,6 +242,9 @@
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
 
+(require 'org-trello)
+(custom-set-variables '(org-trello-files '("~/scratch/trello/clojure.org")))
+
 ;; Keybindings
 ;; Place your bindings here.
 
