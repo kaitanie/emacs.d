@@ -81,6 +81,41 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; ido
+(require 'ido)
+(require 'flx-ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
+
+(require 'yasnippet)
+(defun yas-ido-expand ()
+  "Lets you select (and expand) a yasnippet key"
+  (interactive)
+    (let ((original-point (point)))
+      (while (and
+              (not (= (point) (point-min) ))
+              (not
+               (string-match "[[:space:]\n]" (char-to-string (char-before)))))
+        (backward-word 1))
+    (let* ((init-word (point))
+           (word (buffer-substring init-word original-point))
+           (list (yas-active-keys)))
+      (goto-char original-point)
+      (let ((key (remove-if-not
+                  (lambda (s) (string-match (concat "^" word) s)) list)))
+        (if (= (length key) 1)
+            (setq key (pop key))
+          (setq key (ido-completing-read "key: " list nil nil word)))
+        (delete-char (- init-word original-point))
+        (insert key)
+        (yas-expand)))))
+
+(define-key yas-minor-mode-map (kbd "<C-tab>")     'yas-ido-expand)
+
 ;; Magit
 ;;(setq magit-auto-revert-mode nil)
 (setq magit-last-seen-setup-instructions "1.4.0")
@@ -103,6 +138,7 @@
 
 (defun my-haskell-mode-hook ()
    (haskell-indentation-mode -1) ;; turn off, just to be sure
+   (yas-minor-mode 1) ; for adding require/use/import
    (haskell-indent-mode 1)       ;; turn on indent-mode
 
  ;;  (turn-on-haskell-simple-indent)
