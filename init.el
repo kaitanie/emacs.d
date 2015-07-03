@@ -177,15 +177,16 @@
 (require 'rainbow-mode)
 (require 'paredit)
 (require 'cider)
-(require 'clj-refactor)
+;;(require 'clj-refactor)
 
 (defun my-clojure-mode-hook ()
-    (clj-refactor-mode 1)
+;;    (clj-refactor-mode 1)
     (yas-minor-mode 1) ; for adding require/use/import
     (cljr-add-keybindings-with-prefix "C-c C-m"))
 
 (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 (add-hook 'clojure-mode-hook #'turn-on-paredit)
+(add-hook 'ielm-mode-hook #'turn-on-paredit)
 (add-hook 'cider-repl-mode-hook #'company-mode)
 (add-hook 'cider-mode-hook #'company-mode)
 (add-hook 'cider-repl-mode-hook #'rainbow-mode)
