@@ -41,6 +41,8 @@
                                                       'opam
                                                       'systemd
                                                       'haskell-snippets
+						      'flx
+						      'flx-ido
                                                       'ghc
                                                       'hamlet-mode
                                                       'org
