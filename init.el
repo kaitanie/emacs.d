@@ -44,6 +44,8 @@
                                                       'haskell-snippets
 						      'flx
 						      'flx-ido
+                                                      'jsx-mode
+                                                      'react-snippets
                                                       'ghc
                                                       'hamlet-mode
                                                       'org
