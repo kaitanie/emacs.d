@@ -29,6 +29,7 @@
     (package-refresh-contents))
 
 (let ((installation-results (ensure-package-installed 'magit
+                                                      'magit-gitflow
                                                       'utop
                                                       'undo-tree
                                                       'cider
@@ -121,6 +122,8 @@
 ;; Magit
 ;;(setq magit-auto-revert-mode nil)
 (setq magit-last-seen-setup-instructions "1.4.0")
+(require 'magit-gitflow)
+(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
 ;; No tabs
 (setq-default indent-tabs-mode nil)
