@@ -206,6 +206,7 @@
 
 (define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp)
 (define-key paredit-mode-map (kbd "M-(") 'paredit-forward-barf-sexp)
+(define-key clojure-mode-map (kbd "C-M-z") 'cider-eval-buffer)
 
 ;; Emacs Lisp
 (add-hook 'emacs-lisp-mode-hook 'turn-on-paredit)
