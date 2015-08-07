@@ -60,6 +60,8 @@
                                                       'hackernews
                                                       'gist
                                                       'restclient
+                                                      'company-restclient
+                                                      'sos
                                                       'company-cabal
                                                       'company-ghc
                                                       'company-ghci
@@ -177,6 +179,8 @@
 (add-hook 'after-init-hook 'global-company-mode)
 (define-key company-active-map (kbd "C-n") 'company-select-next)
 (define-key company-active-map (kbd "C-p") 'company-select-previous)
+
+(add-to-list 'company-backends 'company-restclient)
 
 ;; Clojure
 (defun turn-on-paredit () (paredit-mode 1))
