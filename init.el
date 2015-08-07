@@ -243,6 +243,10 @@
 ;;           ;; Turn on auto-fill minor mode.
 ;;           (lambda () (auto-fill-mode 1)))
 
+;; JSX mode
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+(autoload 'jsx-mode "jsx-mode" "JSX mode" t)
+
 ;; Org-mode
 (require 'org)
 (define-key global-map "\C-cl" 'org-store-link)
