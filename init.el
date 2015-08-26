@@ -129,6 +129,8 @@
 (require 'magit-gitflow)
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
+(define-key global-map (kbd "<f12>") 'magit-status)
+
 ;; No tabs
 (setq-default indent-tabs-mode nil)
 
