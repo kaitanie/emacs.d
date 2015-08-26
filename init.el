@@ -195,9 +195,9 @@
 (defun my-clojure-mode-hook ()
     (clj-refactor-mode 1)
     (yas-minor-mode 1) ; for adding require/use/import
+;;    (rainbow-turn-on 1)
     (cljr-add-keybindings-with-prefix "C-c C-m"))
 
-;;    (rainbow-turn-on 1)
 (eval-after-load 'clojure-mode
   '(font-lock-add-keywords
     'clojure-mode `(("(\\(fn\\)[\[[:space:]]"
@@ -219,13 +219,14 @@
                                                (match-end 1) "∈")
                                nil))))))
 
-(add-hook 'cider-repl-mode-hook #'company-mode)
-(add-hook 'cider-mode-hook #'company-mode)
-(add-hook 'cider-repl-mode-hook #'rainbow-mode)
 (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 ;;(add-hook 'clojure-mode-hook #'rainbow-mode)
 (add-hook 'clojure-mode-hook #'turn-on-paredit)
 (add-hook 'ielm-mode-hook #'turn-on-paredit)
+(add-hook 'cider-repl-mode-hook #'company-mode)
+(add-hook 'cider-mode-hook #'company-mode)
+;;(add-hook 'cider-repl-mode-hook #'rainbow-mode)
+;;(add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'cider-repl-mode-hook #'turn-on-paredit)
 (setq cider-test-show-report-on-success t)
 (setq cider-interactive-eval-result-prefix ";; => ")
