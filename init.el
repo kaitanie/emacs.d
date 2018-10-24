@@ -3,7 +3,7 @@
 ;; ELPA/MELPA
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -30,15 +30,18 @@
 
 (let ((installation-results (ensure-package-installed 'magit
                                                       'magit-gitflow
+                                                      'evil
+                                                      'evil-magit
+                                                      'evil-collection
+                                                      'evil-lisp-state
                                                       'utop
                                                       'undo-tree
                                                       'cider
                                                       'clojure-mode
                                                       'clj-refactor
                                                       'typed-clojure-mode
+                                                      'projectile
                                                       'haskell-mode
-                                                      'scala-mode2
-                                                      'lush-theme
                                                       'opam
                                                       'systemd
                                                       'haskell-snippets
@@ -47,24 +50,19 @@
                                                       'jsx-mode
                                                       'react-snippets
                                                       'ghc
-                                                      'hamlet-mode
                                                       'org
                                                       'org-trello
                                                       'clojure-snippets
-                                                      'datomic-snippets
-                                                      'java-snippets
+                                                      'abyss-theme
                                                       'lusty-explorer
                                                       'xkcd
                                                       'paredit
                                                       'company
                                                       'hackernews
                                                       'gist
-                                                      'restclient
-                                                      'company-restclient
                                                       'sos
                                                       'company-cabal
                                                       'company-ghc
-                                                      'company-ghci
                                                       'rainbow-mode)))
   (when (delq 'nil installation-results)
     ;; activate newly installed packages
@@ -76,6 +74,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
+ '(org-trello-current-prefix-keybinding "C-c o" nil (org-trello))
+ '(org-trello-files (quote ("~/scratch/trello/clojure.org")) nil (org-trello))
+ '(package-selected-packages
+   (quote
+    (evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode org-trello opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
  '(safe-local-variable-values
    (quote
     ((haskell-process-use-ghci . t)
@@ -127,6 +130,7 @@
 ;;(setq magit-auto-revert-mode nil)
 (setq magit-last-seen-setup-instructions "1.4.0")
 (require 'magit-gitflow)
+(require 'evil-magit)
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
 (define-key global-map (kbd "<f12>") 'magit-status)
@@ -137,6 +141,13 @@
 ;; UI
 ;;(menu-bar-mode -1)
 (tool-bar-mode -1)
+
+(require 'evil)
+(evil-mode 1)
+
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;; Undo tree
 (require 'undo-tree)
@@ -247,27 +258,27 @@
 ;; Add Opam site-lisp directory to load-path to use Emacs Lisp
 ;; programs installed using Opam (the OCaml package manager) if Opam
 ;; is installed.
-(let ((opam-config (shell-command-to-string "opam config var share 2> /dev/null")))
-  (when (not (string-equal opam-config ""))
-    (let ((opam-share (substring opam-config 0 -1)))
-      (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
-      (require 'merlin)
-      (require 'utop))))
+;; (let ((opam-config (shell-command-to-string "opam config var share 2> /dev/null")))
+;;   (when (not (string-equal opam-config ""))
+;;     (let ((opam-share (substring opam-config 0 -1)))
+;;       (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
+;;       (require 'merlin)
+;;       (require 'utop))))
 
 ;; Start merlin on ocaml files
-(add-hook 'tuareg-mode-hook 'merlin-mode t)
-(add-hook 'caml-mode-hook 'merlin-mode t)
+;;(add-hook 'tuareg-mode-hook 'merlin-mode t)
+;;(add-hook 'caml-mode-hook 'merlin-mode t)
 ;; Enable auto-complete
-(setq merlin-use-auto-complete-mode 'easy)
+;;(setq merlin-use-auto-complete-mode 'easy)
 ;; Use opam switch to lookup ocamlmerlin binary
-(setq merlin-command 'opam)
+;;(setq merlin-command 'opam)
 
 ;; Indent `=' like a standard keyword.
-(setq tuareg-lazy-= t)
+;;(setq tuareg-lazy-= t)
 ;; Indent [({ like standard keywords.
-(setq tuareg-lazy-paren t)
+;;(setq tuareg-lazy-paren t)
 ;; No indentation after `in' keywords.
-(setq tuareg-in-indent 0)
+;;(setq tuareg-in-indent 0)
 
 
 ;; (add-hook 'tuareg-mode-hook
@@ -285,7 +296,7 @@
 (setq org-log-done t)
 
 (require 'org-trello)
-(custom-set-variables '(org-trello-files '("~/scratch/trello/clojure.org")))
+
 
 ;; Keybindings
 ;; Place your bindings here.
@@ -310,4 +321,5 @@ Then move to that line and indent accordning to mode"
 (define-key global-map (kbd "C-o") 'open-line-above)
 
 ;; Theme
-(lush-theme)
+;;(lush-theme)
+(abyss-theme)
