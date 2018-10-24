@@ -164,7 +164,7 @@
 (require 'evil)
 (evil-mode 1)
 
-(global-hl-line-mode 1)
+;;(global-hl-line-mode 1)
 
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
@@ -341,3 +341,4 @@ Then move to that line and indent accordning to mode"
 ;; Theme
 ;;(lush-theme)
 (abyss-theme)
+
