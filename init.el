@@ -52,7 +52,6 @@
                                                       'react-snippets
                                                       'ghc
                                                       'org
-                                                      'org-trello
                                                       'clojure-snippets
                                                       'abyss-theme
                                                       'lusty-explorer
@@ -87,12 +86,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(custom-enabled-themes (quote (abyss)))
+ '(custom-safe-themes
+   (quote
+    ("dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default)))
  '(inhibit-startup-screen t)
- '(org-trello-current-prefix-keybinding "C-c o" nil (org-trello))
- '(org-trello-files (quote ("~/scratch/trello/clojure.org")) nil (org-trello))
  '(package-selected-packages
    (quote
-    (flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode org-trello opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
+    (overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
  '(safe-local-variable-values
    (quote
     ((haskell-process-use-ghci . t)
@@ -310,9 +315,6 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
-
-(require 'org-trello)
-
 
 ;; Keybindings
 ;; Place your bindings here.
