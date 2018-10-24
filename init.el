@@ -34,6 +34,7 @@
                                                       'evil-magit
                                                       'evil-collection
                                                       'evil-lisp-state
+                                                      'flycheck
                                                       'utop
                                                       'undo-tree
                                                       'cider
@@ -68,6 +69,19 @@
     ;; activate newly installed packages
     (package-initialize)))
 
+(add-to-list 'load-path "~/.emacs.d/vendor/purescript-mode/")
+(require 'purescript-mode-autoloads)
+(add-to-list 'Info-default-directory-list "~/.emacs.d/vendor/purescript-mode/")
+
+(add-to-list 'load-path "~/.emacs.d/vendor/psc-ide-emacs/")
+(require 'psc-ide)
+
+(add-hook 'purescript-mode-hook (lambda ()
+                                  (psc-ide-mode)
+;;                                  (company-mode)
+                                  (flycheck-mode)
+                                  (turn-on-purescript-indentation)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -78,7 +92,7 @@
  '(org-trello-files (quote ("~/scratch/trello/clojure.org")) nil (org-trello))
  '(package-selected-packages
    (quote
-    (evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode org-trello opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
+    (flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode org-trello opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
  '(safe-local-variable-values
    (quote
     ((haskell-process-use-ghci . t)

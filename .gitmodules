@@ -1,0 +1,6 @@
+[submodule "vendor/purescript-mode"]
+	path = vendor/purescript-mode
+	url = https://github.com/dysinger/purescript-mode
+[submodule "vendor/psc-ide-emacs"]
+	path = vendor/psc-ide-emacs
+	url = https://github.com/epost/psc-ide-emacs
