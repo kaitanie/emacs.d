@@ -33,6 +33,7 @@
                                                       'evil
                                                       'evil-magit
                                                       'evil-collection
+                                                      'csv-mode
                                                       'evil-lisp-state
                                                       'flycheck
                                                       'utop
@@ -50,6 +51,7 @@
 						      'flx-ido
                                                       'jsx-mode
                                                       'react-snippets
+                                                      'use-package
                                                       'ghc
                                                       'org
                                                       'clojure-snippets
@@ -97,7 +99,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
+    (nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
  '(safe-local-variable-values
    (quote
     ((haskell-process-use-ghci . t)
@@ -152,6 +154,7 @@
 (require 'evil-magit)
 (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 (define-key global-map (kbd "<f12>") 'magit-status)
 
 ;; No tabs
@@ -166,9 +169,9 @@
 
 ;;(global-hl-line-mode 1)
 
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;;(projectile-mode +1)
+;;(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+;;(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;; Undo tree
 (require 'undo-tree)
@@ -324,8 +327,6 @@
 (define-key global-map (kbd "C-=") 'text-scale-increase)
 (define-key global-map (kbd "C--") 'text-scale-decrease)
 
-(define-key global-map (kbd "C-`") 'ac-complete-ensime-completions)
-
 (defun open-line-above ()
   "Open a line above the line the point is at.
 Then move to that line and indent accordning to mode"
@@ -338,7 +339,61 @@ Then move to that line and indent accordning to mode"
 
 (define-key global-map (kbd "C-o") 'open-line-above)
 
+(require 'use-package)
+
+;; ivy
+(use-package ivy
+  :ensure t
+  :diminish ivy-mode
+  :config
+  (ivy-mode 1)
+  (bind-key "C-c C-r" 'ivy-resume))
+
+;; projectile
+(use-package projectile
+  :ensure t
+  :after ivy
+  :config (progn
+            (projectile-global-mode)
+            (setq projectile-mode-line
+                  '(:eval (format " [%s]" (projectile-project-name))))
+            (setq projectile-remember-window-configs t)
+            (setq projectile-completion-system 'ivy)))
+
+(use-package counsel
+  :ensure t
+  :after projectile
+  :config (counsel-mode 1))
+
+(use-package swiper
+  :ensure t
+  :after counsel
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  (global-set-key "\C-s" 'swiper)
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  (global-set-key (kbd "<f6>") 'ivy-resume)
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+  (global-set-key (kbd "<f1> l") 'counsel-find-library)
+  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+  (global-set-key (kbd "C-c g") 'counsel-git)
+  (global-set-key (kbd "C-c j") 'counsel-git-grep)
+  (global-set-key (kbd "C-c k") 'counsel-ag)
+  (global-set-key (kbd "C-x l") 'counsel-locate)
+  (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+  (define-key evil-motion-state-map (kbd "/") 'swiper)
+  (define-key evil-motion-state-map (kbd "?") 'swiper)
+  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
+
+(use-package nix-mode
+  :ensure t
+  :mode "\\.nix\\'")
+
 ;; Theme
 ;;(lush-theme)
 (abyss-theme)
-
