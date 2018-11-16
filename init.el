@@ -34,6 +34,7 @@
                                                       'evil-magit
                                                       'evil-collection
                                                       'csv-mode
+						      'dash-functional
                                                       'evil-lisp-state
                                                       'flycheck
                                                       'utop
@@ -70,19 +71,29 @@
     ;; activate newly installed packages
     (package-initialize)))
 
-(add-to-list 'load-path "~/.emacs.d/vendor/purescript-mode/")
-(require 'purescript-mode-autoloads)
-(add-to-list 'Info-default-directory-list "~/.emacs.d/vendor/purescript-mode/")
-
+(add-to-list 'load-path "~/.emacs.d/vendor/new-purescript-mode/")
+(require 'purescript-mode)
+(add-to-list 'Info-default-directory-list "~/.emacs.d/vendor/new-purescript-mode/")
 (add-to-list 'load-path "~/.emacs.d/vendor/psc-ide-emacs/")
 (require 'psc-ide)
 
+;; (use-package purescript-mode-autoloads
+;;   :mode "\\.purs\\'"
+;;   )
+
+;; (use-package psc-ide-mode
+;;   :after purescript-mode-autoloads
+;;   :mode "\\.purs\\'"
+;;   :config (progn (flycheck-mode)
+;;                  (turn-on-purescript-indentation)))
+
 (add-hook 'purescript-mode-hook (lambda ()
                                   (psc-ide-mode)
-;;                                  (company-mode)
+                                  (company-mode)
                                   (flycheck-mode)
                                   (turn-on-purescript-indentation)))
 
+(global-set-key (kbd "C-M-i") 'company-complete)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -92,6 +103,7 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(company-idle-delay 2.0)
  '(custom-enabled-themes (quote (abyss)))
  '(custom-safe-themes
    (quote
@@ -99,10 +111,11 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
+    (highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
  '(safe-local-variable-values
    (quote
-    ((haskell-process-use-ghci . t)
+    ((psc-ide-source-globs "src/**/*.purs" "test/**/*.purs" "examples/**/*.purs")
+     (haskell-process-use-ghci . t)
      (haskell-indent-spaces . 4))))
  '(show-paren-mode t))
 (custom-set-faces
@@ -260,6 +273,7 @@
 (add-hook 'ielm-mode-hook #'turn-on-paredit)
 (add-hook 'cider-repl-mode-hook #'company-mode)
 (add-hook 'cider-mode-hook #'company-mode)
+(define-key company-active-map (kbd "<return>") nil)
 ;;(add-hook 'cider-repl-mode-hook #'rainbow-mode)
 ;;(add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'cider-repl-mode-hook #'turn-on-paredit)
@@ -275,39 +289,6 @@
 
 ;; Emacs Lisp
 (add-hook 'emacs-lisp-mode-hook 'turn-on-paredit)
-
-;; OCaml
-;; Add opam emacs directory to the load-path
-
-;; Add Opam site-lisp directory to load-path to use Emacs Lisp
-;; programs installed using Opam (the OCaml package manager) if Opam
-;; is installed.
-;; (let ((opam-config (shell-command-to-string "opam config var share 2> /dev/null")))
-;;   (when (not (string-equal opam-config ""))
-;;     (let ((opam-share (substring opam-config 0 -1)))
-;;       (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
-;;       (require 'merlin)
-;;       (require 'utop))))
-
-;; Start merlin on ocaml files
-;;(add-hook 'tuareg-mode-hook 'merlin-mode t)
-;;(add-hook 'caml-mode-hook 'merlin-mode t)
-;; Enable auto-complete
-;;(setq merlin-use-auto-complete-mode 'easy)
-;; Use opam switch to lookup ocamlmerlin binary
-;;(setq merlin-command 'opam)
-
-;; Indent `=' like a standard keyword.
-;;(setq tuareg-lazy-= t)
-;; Indent [({ like standard keywords.
-;;(setq tuareg-lazy-paren t)
-;; No indentation after `in' keywords.
-;;(setq tuareg-in-indent 0)
-
-
-;; (add-hook 'tuareg-mode-hook
-;;           ;; Turn on auto-fill minor mode.
-;;           (lambda () (auto-fill-mode 1)))
 
 ;; JSX mode
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
@@ -355,6 +336,7 @@ Then move to that line and indent accordning to mode"
   :after ivy
   :config (progn
             (projectile-global-mode)
+            (global-set-key (kbd "C-c p f") 'projectile-find-file)
             (setq projectile-mode-line
                   '(:eval (format " [%s]" (projectile-project-name))))
             (setq projectile-remember-window-configs t)
@@ -393,6 +375,65 @@ Then move to that line and indent accordning to mode"
 (use-package nix-mode
   :ensure t
   :mode "\\.nix\\'")
+
+(add-to-list 'load-path "~/.emacs.d/vendor/dhall-mode/")
+(use-package dhall-mode
+  :mode "\\.dhall\\'")
+
+(use-package highlight-indentation
+  :ensure t
+  :config (progn
+            (set-face-background 'highlight-indentation-face "#696969")
+            (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+            (add-hook 'prog-mode-hook 'highlight-indentation-mode)))
+
+(use-package markdown-mode
+  :ensure t
+  :mode "\\.md\\'")
+;; OCaml
+;; Add opam emacs directory to the load-path
+
+;; Add Opam site-lisp directory to load-path to use Emacs Lisp
+;; programs installed using Opam (the OCaml package manager) if Opam
+;; is installed.
+(use-package tuareg
+  :ensure t
+  :mode ("\\.ml[ily]?$" . tuareg-mode)
+  :config (progn
+            (let ((opam-config (shell-command-to-string "opam config var share 2> /dev/null")))
+              (when (not (string-equal opam-config ""))
+                (let ((opam-share (substring opam-config 0 -1)))
+                  (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
+                  (require 'merlin)
+                  (require 'utop)
+                  (add-hook 'tuareg-mode-hook 'merlin-mode t)
+                  (add-hook 'caml-mode-hook 'merlin-mode t)
+                  (setq merlin-use-auto-complete-mode 'easy)
+                  (setq merlin-command 'opam)
+                  (setq tuareg-lazy-= t)
+                  (setq tuareg-in-indent 0))))))
+
+;; Start merlin on ocaml files
+;;(add-hook 'tuareg-mode-hook 'merlin-mode t)
+;;(add-hook 'caml-mode-hook 'merlin-mode t)
+;; Enable auto-complete
+;;(setq merlin-use-auto-complete-mode 'easy)
+;; Use opam switch to lookup ocamlmerlin binary
+;;(setq merlin-command 'opam)
+
+;; Indent `=' like a standard keyword.
+;;(setq tuareg-lazy-= t)
+;; Indent [({ like standard keywords.
+;;(setq tuareg-lazy-paren t)
+;; No indentation after `in' keywords.
+;;(setq tuareg-in-indent 0)
+
+
+;; (add-hook 'tuareg-mode-hook
+;;           ;; Turn on auto-fill minor mode.
+;;           (lambda () (auto-fill-mode 1)))
+
+
 
 ;; Theme
 ;;(lush-theme)
