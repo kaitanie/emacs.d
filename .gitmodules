@@ -1,8 +1,8 @@
 [submodule "vendor/dhall-mode"]
 	path = vendor/dhall-mode
 	url = https://github.com/psibi/dhall-mode
-[submodule "vendor/vendor/psc-ide-emacs"]
-	path = vendor/vendor/psc-ide-emacs
+[submodule "vendor/psc-ide-emacs"]
+	path = vendor/psc-ide-emacs
 	url = https://github.com/justinwoo/psc-ide-emacs
 [submodule "vendor/new-purescript-mode"]
 	path = vendor/new-purescript-mode
