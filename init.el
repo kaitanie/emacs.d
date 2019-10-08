@@ -3,7 +3,10 @@
 ;; ELPA/MELPA
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/")
+
+ ;;            '("melpa-stable" . "https://stable.melpa.org/packages/") t
+)
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
@@ -31,6 +34,7 @@
 (let ((installation-results (ensure-package-installed 'magit
                                                       'magit-gitflow
                                                       'ag
+                                                      'rust-mode
                                                       'evil
                                                       'evil-magit
                                                       'evil-collection
@@ -45,13 +49,14 @@
                                                       'clj-refactor
                                                       'typed-clojure-mode
                                                       'projectile
-                                                      'haskell-mode
+;;                                                      'haskell-mode
                                                       'opam
                                                       'systemd
                                                       'haskell-snippets
 						      'flx
+                                                      'flycheck-clj-kondo
 						      'flx-ido
-                                                      'jsx-mode
+;;                                                      'jsx-mode
                                                       'react-snippets
                                                       'use-package
                                                       'ghc
@@ -108,11 +113,12 @@
  '(custom-enabled-themes (quote (abyss)))
  '(custom-safe-themes
    (quote
-    ("dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default)))
+    ("d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default)))
  '(inhibit-startup-screen t)
+ '(lsp-haskell-process-path-hie "ghcide")
  '(package-selected-packages
    (quote
-    (highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
+    (wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
  '(safe-local-variable-values
    (quote
     ((psc-ide-source-globs "src/**/*.purs" "test/**/*.purs" "examples/**/*.purs")
@@ -192,29 +198,29 @@
 (global-undo-tree-mode)
 
 ;; Haskell
-(require 'haskell-mode)
-(require 'haskell-session)
-(require 'haskell-indentation)
+;;--(require 'haskell-mode)
+;;--(require 'haskell-session)
+;;--(require 'haskell-indentation)
 
-(defun my-haskell-mode-hook ()
-   (haskell-indentation-mode -1) ;; turn off, just to be sure
-   (yas-minor-mode 1) ; for adding require/use/import
-   (haskell-indent-mode 1)       ;; turn on indent-mode
+;; (defun my-haskell-mode-hook ()
+;;    (haskell-indentation-mode -1) ;; turn off, just to be sure
+;;    (yas-minor-mode 1) ; for adding require/use/import
+;;    (haskell-indent-mode 1)       ;; turn on indent-mode
 
- ;;  (turn-on-haskell-simple-indent)
-   (haskell-indentation)
+;;  ;;  (turn-on-haskell-simple-indent)
+;;    (haskell-indentation)
 
-   ;; further customisations go here.  For example:
-   (setq locale-coding-system 'utf-8 )
-   (flyspell-prog-mode)  ;; spell-checking in comments and strings
-   ;; etc.
+;;    ;; further customisations go here.  For example:
+;;    (setq locale-coding-system 'utf-8 )
+;;    (flyspell-prog-mode)  ;; spell-checking in comments and strings
+;;    ;; etc.
 
-   )
+;;    )
 
 ;;(add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;;--(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+;;--(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 (require 'company)
@@ -242,6 +248,7 @@
 ;;(require 'clj-refactor)
 
 (defun my-clojure-mode-hook ()
+    (require 'flycheck-clj-kondo)
     (clj-refactor-mode 1)
     (yas-minor-mode 1) ; for adding require/use/import
 ;;    (rainbow-turn-on 1)
@@ -293,7 +300,11 @@
 
 ;; JSX mode
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
-(autoload 'jsx-mode "jsx-mode" "JSX mode" t)
+;;(autoload 'jsx-mode "jsx-mode" "JSX mode" t)
+;;(add-hook 'jsx-mode-hook
+;;        (lambda () (setq forward-sexp-function nil)))
+(add-hook 'javascript-mode-hook
+        (lambda () (setq forward-sexp-function nil)))
 
 ;; Org-mode
 (require 'org)
@@ -322,6 +333,37 @@ Then move to that line and indent accordning to mode"
 (define-key global-map (kbd "C-o") 'open-line-above)
 
 (require 'use-package)
+
+;; Haskell
+
+(use-package lsp-mode
+  :ensure t)
+
+(use-package company-lsp
+  :ensure t
+;;  :after lsp-mode
+  :config (progn
+            (push 'company-lsp company-backends)))
+
+(use-package haskell-mode
+  :ensure t
+;;  :after company-lsp
+  :config (progn
+            (flycheck-mode 1)
+            (interactive-haskell-mode)
+            ))
+
+(use-package lsp-haskell
+  :ensure t
+;;  :after haskell-mode
+  :config (progn
+            (require 'haskell-mode)
+            (require 'lsp-mode)
+            (setq lsp-haskell-process-path-hie "ghcide")
+            (setq lsp-haskell-process-args-hie '())
+            ;;(add-hook 'haskell-mode-hook #'lsp)
+            ))
+
 
 ;; ivy
 (use-package ivy
@@ -413,6 +455,26 @@ Then move to that line and indent accordning to mode"
                   (setq merlin-command 'opam)
                   (setq tuareg-lazy-= t)
                   (setq tuareg-in-indent 0))))))
+
+(use-package wand
+  :ensure t
+  :config (progn
+            (setq wand:*rules*
+                  (list (wand:create-rule :match "\\$ "
+                                          :capture :after
+                                          :action #'popup-shell-command)
+                        (wand:create-rule :match "https?://"
+                                          :capture :whole
+                                          :action #'open-url-in-firefox)
+                        (wand:create-rule :match "file:"
+                                          :capture :after
+                                          :action #'find-file)
+                        (wand:create-rule :match "#> "
+                                          :capture :after
+                                          :action #'(lambda (string)
+                                                      (eval (read string))))))
+            ))
+
 
 ;; Start merlin on ocaml files
 ;;(add-hook 'tuareg-mode-hook 'merlin-mode t)
