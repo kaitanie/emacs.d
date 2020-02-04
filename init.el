@@ -32,12 +32,14 @@
     (package-refresh-contents))
 
 (let ((installation-results (ensure-package-installed 'magit
+                                                      'web-mode
                                                       'magit-gitflow
                                                       'ag
-                                                      'rust-mode
+;;                                                      'rust-mode
                                                       'evil
                                                       'evil-magit
                                                       'evil-collection
+                                                      'psc-ide
                                                       'csv-mode
 						      'dash-functional
                                                       'evil-lisp-state
@@ -47,7 +49,6 @@
                                                       'cider
                                                       'clojure-mode
                                                       'clj-refactor
-                                                      'typed-clojure-mode
                                                       'projectile
 ;;                                                      'haskell-mode
                                                       'opam
@@ -63,7 +64,6 @@
                                                       'org
                                                       'clojure-snippets
                                                       'abyss-theme
-                                                      'lusty-explorer
                                                       'xkcd
                                                       'paredit
                                                       'company
@@ -80,7 +80,7 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/new-purescript-mode/")
 (require 'purescript-mode)
 (add-to-list 'Info-default-directory-list "~/.emacs.d/vendor/new-purescript-mode/")
-(add-to-list 'load-path "~/.emacs.d/vendor/psc-ide-emacs/")
+;;(add-to-list 'load-path "~/.emacs.d/vendor/psc-ide-emacs/")
 (require 'psc-ide)
 
 ;; (use-package purescript-mode-autoloads
@@ -97,7 +97,9 @@
                                   (psc-ide-mode)
                                   (company-mode)
                                   (flycheck-mode)
-                                  (turn-on-purescript-indentation)))
+                                  (global-set-key (kbd "<f11>") 'psc-ide-goto-definition)
+                                  ;;(turn-on-purescript-indentation)
+                                  ))
 
 (global-set-key (kbd "C-M-i") 'company-complete)
 (custom-set-variables
@@ -118,7 +120,7 @@
  '(lsp-haskell-process-path-hie "ghcide")
  '(package-selected-packages
    (quote
-    (wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
+    (flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
  '(safe-local-variable-values
    (quote
     ((psc-ide-source-globs "src/**/*.purs" "test/**/*.purs" "examples/**/*.purs")
@@ -299,12 +301,11 @@
 (add-hook 'emacs-lisp-mode-hook 'turn-on-paredit)
 
 ;; JSX mode
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+;;(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
 ;;(autoload 'jsx-mode "jsx-mode" "JSX mode" t)
 ;;(add-hook 'jsx-mode-hook
 ;;        (lambda () (setq forward-sexp-function nil)))
-(add-hook 'javascript-mode-hook
-        (lambda () (setq forward-sexp-function nil)))
+;; (add-hook 'javascript-mode-hook (lambda () (setq forward-sexp-function nil)))
 
 ;; Org-mode
 (require 'org)
@@ -333,6 +334,37 @@ Then move to that line and indent accordning to mode"
 (define-key global-map (kbd "C-o") 'open-line-above)
 
 (require 'use-package)
+
+;; use local eslint from node_modules before global
+;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+(defun my/use-eslint-from-node-modules ()
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (eslint (and root
+                      (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                        root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
+
+(require 'flycheck)
+(require 'web-mode)
+
+;; Javascript/JSX
+(use-package web-mode
+  :ensure t
+  :mode "\\.jsx\\'"
+  :init (progn
+         (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+          ;; disable jshint since we prefer eslint checking
+          (setq-default flycheck-disabled-checkers
+                        (append flycheck-disabled-checkers
+                                '(javascript-jshint)))
+          ;; use eslint with web-mode for jsx files
+          (flycheck-add-mode 'javascript-eslint 'web-mode)
+
+          (global-flycheck-mode 't)
+          ))
 
 ;; Haskell
 
@@ -456,26 +488,6 @@ Then move to that line and indent accordning to mode"
                   (setq tuareg-lazy-= t)
                   (setq tuareg-in-indent 0))))))
 
-(use-package wand
-  :ensure t
-  :config (progn
-            (setq wand:*rules*
-                  (list (wand:create-rule :match "\\$ "
-                                          :capture :after
-                                          :action #'popup-shell-command)
-                        (wand:create-rule :match "https?://"
-                                          :capture :whole
-                                          :action #'open-url-in-firefox)
-                        (wand:create-rule :match "file:"
-                                          :capture :after
-                                          :action #'find-file)
-                        (wand:create-rule :match "#> "
-                                          :capture :after
-                                          :action #'(lambda (string)
-                                                      (eval (read string))))))
-            ))
-
-
 ;; Start merlin on ocaml files
 ;;(add-hook 'tuareg-mode-hook 'merlin-mode t)
 ;;(add-hook 'caml-mode-hook 'merlin-mode t)
@@ -496,6 +508,44 @@ Then move to that line and indent accordning to mode"
 ;;           ;; Turn on auto-fill minor mode.
 ;;           (lambda () (auto-fill-mode 1)))
 
+
+;; Rust
+(use-package flycheck
+  :hook (prog-mode . flycheck-mode))
+
+(use-package company
+  :ensure t
+  :hook (prog-mode . company-mode)
+  :config (setq company-tooltip-align-annotations t)
+          (setq company-minimum-prefix-length 1))
+
+(use-package lsp-mode
+  :ensure t
+  :commands lsp
+  :config (require 'lsp-clients))
+
+(use-package lsp-ui
+  :ensure t)
+
+;; Allow Company to get info from LSP (use-package company-lsp)
+
+;; The actual Rust-specific stuff:
+
+(use-package toml-mode
+  :ensure t)
+
+(use-package rust-mode
+  :ensure t
+  :hook (rust-mode . lsp))
+
+;; Add keybindings for interacting with Cargo
+(use-package cargo
+  :ensure t
+  :hook (rust-mode . cargo-minor-mode))
+
+(use-package flycheck-rust
+  :ensure t
+  :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 
 ;; Theme
