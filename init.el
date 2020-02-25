@@ -536,7 +536,8 @@ Then move to that line and indent accordning to mode"
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
-  :config (require 'lsp-clients))
+;;  :config (require 'lsp-clients)
+  )
 
 (use-package lsp-ui
   :ensure t)
