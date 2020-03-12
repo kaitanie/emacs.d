@@ -1,3 +1,7 @@
+;;; package --- Emacs configuration file.
+;;; Commentary:
+;;; Emacs config file.
+
 (require 'cl)
 
 ;; ELPA/MELPA
@@ -546,8 +550,29 @@ Then move to that line and indent accordning to mode"
 
 ;; The actual Rust-specific stuff:
 
+(defun my/normalize-rust-windows! ()
+  "Foo."
+  (interactive)
+  (let ((original-buffer (current-buffer)))
+    (get-buffer-create "*lsp-help*")
+    (flycheck-list-errors)
+    (switch-to-buffer original-buffer)
+    (delete-other-windows)
+    (let* ((side-buffer-width (* (window-width) 0.33))
+           (split-point (ceiling (- (window-width) side-buffer-width))))
+      (split-window-vertically (- (window-height) 10))
+      (split-window-horizontally split-point))
+    (windmove-down)
+    (switch-to-buffer "*Flycheck errors*")
+    (windmove-up)
+    (windmove-right)
+    (switch-to-buffer "*lsp-help*")
+    (windmove-left)))
+
 (use-package toml-mode
-  :ensure t)
+  :ensure t
+  :config (progn
+            (bind-key "<f9>" 'my/normalize-rust-windows!)))
 
 (use-package rust-mode
   :ensure t
@@ -562,7 +587,9 @@ Then move to that line and indent accordning to mode"
   :ensure t
   :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
-
 ;; Theme
 ;;(lush-theme)
 (abyss-theme)
+
+(provide 'init)
+;;; Init.el ends here
