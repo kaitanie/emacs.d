@@ -107,6 +107,12 @@
                                   ))
 
 (global-set-key (kbd "C-M-i") 'company-complete)
+
+;; (global-set-key (kbd "M-j") 'windmove-down)
+;; (global-set-key (kbd "M-k") 'windmove-up)
+;; (global-set-key (kbd "M-h") 'windmove-left)
+;; (global-set-key (kbd "M-l") 'windmove-right)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -193,6 +199,12 @@
 
 (require 'evil)
 (evil-mode 1)
+
+(evil-define-key 'normal global-map
+  (kbd "C-M-j") 'windmove-down
+  (kbd "C-M-k") 'windmove-up
+  (kbd "C-M-h") 'windmove-left
+  (kbd "C-M-l") 'windmove-right)
 
 ;;(global-hl-line-mode 1)
 
