@@ -37,11 +37,11 @@
 
 (let ((installation-results (ensure-package-installed 'magit
                                                       'web-mode
-                                                      'magit-gitflow
+                                                      ;; 'magit-gitflow
                                                       'ag
 ;;                                                      'rust-mode
                                                       'evil
-                                                      'evil-magit
+                                                      ;; 'evil-magit
                                                       'evil-collection
                                                       'psc-ide
                                                       'csv-mode
@@ -182,10 +182,10 @@
 
 ;; Magit
 ;;(setq magit-auto-revert-mode nil)
-(setq magit-last-seen-setup-instructions "1.4.0")
-(require 'magit-gitflow)
-(require 'evil-magit)
-(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+;;(setq magit-last-seen-setup-instructions "1.4.0")
+;;(require 'magit-gitflow)
+;;(require 'evil-magit)
+;;(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (define-key global-map (kbd "<f12>") 'magit-status)
@@ -490,27 +490,63 @@ Then move to that line and indent accordning to mode"
   :ensure t
   :mode "\\.md\\'")
 ;; OCaml
+
+;; New OCaml setup
+(setq custom/merlin-site-elisp (getenv "MERLIN_SITE_LISP"))
+(setq custom/utop-site-elisp (getenv "UTOP_SITE_LISP"))
+(setq custom/ocp-site-elisp (getenv "OCP_INDENT_SITE_LISP"))
+
+(defun in-nix-shell-p ()
+  (string-equal (getenv "IN_NIX_SHELL") "1"))
+
+(use-package merlin
+  :if (and custom/merlin-site-elisp
+           (in-nix-shell-p))
+  :load-path custom/merlin-site-elisp
+  :hook
+  (tuareg-mode . merlin-mode)
+  (merlin-mode . company-mode)
+  :custom
+  (merlin-command "ocamlmerlin"))
+
+(use-package utop
+  :if (and custom/utop-site-elisp
+           (in-nix-shell-p))
+  :load-path custom/utop-site-elisp
+  :hook
+  (tuareg-mode . utop-minor-mode))
+
+(use-package ocp-indent
+  :if (and custom/ocp-site-elisp
+           (in-nix-shell-p))
+  :load-path custom/ocp-site-elisp)
+
 ;; Add opam emacs directory to the load-path
 
 ;; Add Opam site-lisp directory to load-path to use Emacs Lisp
 ;; programs installed using Opam (the OCaml package manager) if Opam
 ;; is installed.
-(use-package tuareg
-  :ensure t
-  :mode ("\\.ml[ily]?$" . tuareg-mode)
-  :config (progn
-            (let ((opam-config (shell-command-to-string "opam config var share 2> /dev/null")))
-              (when (not (string-equal opam-config ""))
-                (let ((opam-share (substring opam-config 0 -1)))
-                  (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
-                  (require 'merlin)
-                  (require 'utop)
-                  (add-hook 'tuareg-mode-hook 'merlin-mode t)
-                  (add-hook 'caml-mode-hook 'merlin-mode t)
-                  (setq merlin-use-auto-complete-mode 'easy)
-                  (setq merlin-command 'opam)
-                  (setq tuareg-lazy-= t)
-                  (setq tuareg-in-indent 0))))))
+
+
+;; (use-package tuareg
+;;   :ensure t
+;;   :mode ("\\.ml[ily]?$" . tuareg-mode)
+;;   :config (progn
+;;             (let* (
+;;                       (merlin-dir (directory-file-name (file-name-directory (shell-command-to-string "which ocamlmerlin"))))
+;;                       (share-dir (string-join (list merlin-dir ".." "share") "/"))
+;;                       )
+;;               (when (not (string-equal share-dir ""))
+;;                 (let ((opam-share share-dir))
+;;                   (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
+;;                   (require 'merlin)
+;;                   (require 'utop)
+;;                   (add-hook 'tuareg-mode-hook 'merlin-mode t)
+;;                   (add-hook 'caml-mode-hook 'merlin-mode t)
+;;                   (setq merlin-use-auto-complete-mode 'easy)
+;;                   (setq merlin-command 'opam)
+;;                   (setq tuareg-lazy-= t)
+;;                   (setq tuareg-in-indent 0))))))
 
 ;; Start merlin on ocaml files
 ;;(add-hook 'tuareg-mode-hook 'merlin-mode t)
