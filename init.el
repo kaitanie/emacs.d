@@ -41,9 +41,9 @@
                                                       'ag
 ;;                                                      'rust-mode
                                                       'evil
-                                                      ;; 'evil-magit
+                                                      'evil-magit
                                                       'evil-collection
-                                                      'psc-ide
+;;                                                      'psc-ide
                                                       'csv-mode
 						      'dash-functional
                                                       'evil-lisp-state
@@ -84,7 +84,7 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/new-purescript-mode/")
 (require 'purescript-mode)
 (add-to-list 'Info-default-directory-list "~/.emacs.d/vendor/new-purescript-mode/")
-;;(add-to-list 'load-path "~/.emacs.d/vendor/psc-ide-emacs/")
+(add-to-list 'load-path "~/.emacs.d/vendor/psc-ide-emacs/")
 (require 'psc-ide)
 
 ;; (use-package purescript-mode-autoloads
@@ -184,7 +184,7 @@
 ;;(setq magit-auto-revert-mode nil)
 ;;(setq magit-last-seen-setup-instructions "1.4.0")
 ;;(require 'magit-gitflow)
-;;(require 'evil-magit)
+(require 'evil-magit)
 ;;(add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
