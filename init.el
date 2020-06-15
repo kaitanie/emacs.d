@@ -646,6 +646,11 @@ Then move to that line and indent accordning to mode"
   :ensure t
   :hook (rust-mode . cargo-minor-mode))
 
+(use-package lua-mode
+  :ensure t
+  :mode "\\.lua\\'")
+
+
 (use-package flycheck-rust
   :ensure t
   :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
