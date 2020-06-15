@@ -97,12 +97,27 @@
 ;;   :config (progn (flycheck-mode)
 ;;                  (turn-on-purescript-indentation)))
 
+(defun my/normalize-purescript-windows! ()
+  "Foo."
+  (interactive)
+  (let ((original-buffer (current-buffer)))
+    (flycheck-list-errors)
+    (switch-to-buffer original-buffer)
+    (delete-other-windows)
+    (split-window-vertically (- (window-height) 10))
+    (windmove-down)
+    (switch-to-buffer "*Flycheck errors*")
+    (windmove-up)
+    (windmove-left)))
+
+
 (add-hook 'purescript-mode-hook (lambda ()
                                   (psc-ide-mode)
                                   (company-mode)
                                   (flycheck-mode)
                                   (global-set-key (kbd "<f11>") 'psc-ide-goto-definition)
                                   (global-set-key (kbd "<f10>") 'psc-ide-load-module)
+                                  (global-set-key (kbd "<f8>") 'my/normalize-purescript-windows!)
                                   ;;(turn-on-purescript-indentation)
                                   ))
 
