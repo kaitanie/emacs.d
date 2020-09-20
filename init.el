@@ -122,6 +122,7 @@
                                   ))
 
 (global-set-key (kbd "C-M-i") 'company-complete)
+(global-set-key (kbd "<C-tab>") 'company-complete)
 
 ;; (global-set-key (kbd "M-j") 'windmove-down)
 ;; (global-set-key (kbd "M-k") 'windmove-up)
@@ -143,7 +144,7 @@
    (quote
     ("d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default)))
  '(inhibit-startup-screen t)
- '(lsp-haskell-process-path-hie "ghcide")
+ '(merlin-completion-with-doc t)
  '(package-selected-packages
    (quote
     (flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
@@ -421,7 +422,7 @@ Then move to that line and indent accordning to mode"
 ;;  :after company-lsp
   :config (progn
             (flycheck-mode 1)
-            (interactive-haskell-mode)
+;;            (interactive-haskell-mode)
             ))
 
 (use-package lsp-haskell
@@ -431,7 +432,7 @@ Then move to that line and indent accordning to mode"
             (require 'haskell-mode)
             (require 'lsp-mode)
             (setq lsp-haskell-process-path-hie "ghcide")
-            (setq lsp-haskell-process-args-hie '())
+            (setq lsp-haskell-process-args-hie '("--lsp"))
             ;;(add-hook 'haskell-mode-hook #'lsp)
             ))
 
@@ -654,6 +655,14 @@ Then move to that line and indent accordning to mode"
 (use-package flycheck-rust
   :ensure t
   :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
+(defun exitmessage ()
+  "Exit message"
+  (interactive)
+  (message "You probably don't wanna quit. Please use the menubar or :q for quitting!"))
+;; Disable C-c C-x
+(global-set-key (kbd "C-x C-c") 'exitmessage)
+
 
 ;; Theme
 ;;(lush-theme)
