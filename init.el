@@ -401,40 +401,70 @@ Then move to that line and indent accordning to mode"
 
 ;; Haskell
 
-(use-package lsp-mode
-  :ensure t
-    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  :init (setq lsp-keymap-prefix "M-l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         ;; (XXX-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+;; LSP
+;; (use-package flycheck
+;;   :ensure t
+;;   :init
+;;   (global-flycheck-mode t))
+;; (use-package yasnippet
+;;   :ensure t)
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :hook (haskell-mode . lsp)
+;;   :commands lsp)
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :commands lsp-ui-mode)
+;; (use-package lsp-haskell
+;;  :ensure t
+;;  :config
+;;  (setq lsp-haskell-process-path-hie "ghcide")
+;;  (setq lsp-haskell-process-args-hie '())
+;;  ;; Comment/uncomment this line to see interactions between lsp client/server.
+;;  ;;(setq lsp-log-io t)
+;; )
 
-(use-package company-lsp
+;; Haskell with eglot
+(use-package eglot
   :ensure t
-;;  :after lsp-mode
   :config (progn
-            (push 'company-lsp company-backends)))
+            (add-to-list 'eglot-server-programs '(haskell-mode . ("ghcide" "--lsp")))))
 
-(use-package haskell-mode
-  :ensure t
-;;  :after company-lsp
-  :config (progn
-            (flycheck-mode 1)
-;;            (interactive-haskell-mode)
-            ))
 
-(use-package lsp-haskell
-  :ensure t
-;;  :after haskell-mode
-  :config (progn
-            (require 'haskell-mode)
-            (require 'lsp-mode)
-            (setq lsp-haskell-process-path-hie "ghcide")
-            (setq lsp-haskell-process-args-hie '("--lsp"))
-            ;;(add-hook 'haskell-mode-hook #'lsp)
-            ))
+;; (use-package lsp-mode
+;;   :ensure t
+;;     ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;;   :init (setq lsp-keymap-prefix "M-l")
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          ;; (XXX-mode . lsp)
+;;          ;; if you want which-key integration
+;;          (lsp-mode . lsp-enable-which-key-integration))
+;;   :commands lsp)
+
+;; (use-package company-lsp
+;;   :ensure t
+;; ;;  :after lsp-mode
+;;   :config (progn
+;;             (push 'company-lsp company-backends)))
+
+;; (use-package haskell-mode
+;;   :ensure t
+;; ;;  :after company-lsp
+;;   :config (progn
+;;             (flycheck-mode 1)
+;; ;;            (interactive-haskell-mode)
+;;             ))
+
+;; (use-package lsp-haskell
+;;   :ensure t
+;; ;;  :after haskell-mode
+;;   :config (progn
+;;             (require 'haskell-mode)
+;;             (require 'lsp-mode)
+;;             (setq lsp-haskell-process-path-hie "ghcide")
+;;             (setq lsp-haskell-process-args-hie '("--lsp"))
+;;             ;;(add-hook 'haskell-mode-hook #'lsp)
+;;             ))
 
 
 ;; ivy
@@ -514,6 +544,16 @@ Then move to that line and indent accordning to mode"
 
 (defun in-nix-shell-p ()
   (string-equal (getenv "IN_NIX_SHELL") "1"))
+
+;; (defun my-merlin-locate ()
+;;   "Locate the identifier under point and keep track of point  for backwards navigation"
+;;   (interactive)
+;;   (push-mark)
+;;   (merlin--locate-result (merlin/locate)))
+
+(use-package tuareg
+  :ensure t
+  :mode ("\\.ml[ily]?$" . tuareg-mode))
 
 (use-package merlin
   :if (and custom/merlin-site-elisp
@@ -660,6 +700,7 @@ Then move to that line and indent accordning to mode"
   "Exit message"
   (interactive)
   (message "You probably don't wanna quit. Please use the menubar or :q for quitting!"))
+
 ;; Disable C-c C-x
 (global-set-key (kbd "C-x C-c") 'exitmessage)
 
