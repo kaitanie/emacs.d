@@ -21,7 +21,7 @@ Then move to that line and indent accordning to mode"
   (interactive)
   (move-beginning-of-line 1)
   (newline)
-  (previous-line)
+  (forward-line -1)
 ;;  (indent-according-to-mode)
   )
 
