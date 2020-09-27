@@ -158,18 +158,18 @@ Then move to that line and indent accordning to mode"
   (global-set-key (kbd "C-M-i") 'company-complete)
   (global-set-key (kbd "<C-tab>") 'company-complete))
 
-(use-package ido
-  :ensure t
-  :config
-  (ido-mode 1)
-  (ido-everywhere 1)
-  (setq ido-enable-flex-matching t)
-  (setq ido-use-faces nil))
+;; (use-package ido
+;;   :ensure t
+;;   :config
+;;   (ido-mode 1)
+;;   (ido-everywhere 1)
+;;   (setq ido-enable-flex-matching t)
+;;   (setq ido-use-faces nil))
 
-(use-package flx-ido
-  :ensure t
-  :config
-  (flx-ido-mode 1))
+;; (use-package flx-ido
+;;   :ensure t
+;;   :config
+;;   (flx-ido-mode 1))
 
 ;; Org-mode
 (use-package org
