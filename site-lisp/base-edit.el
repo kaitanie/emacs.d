@@ -195,5 +195,14 @@ Then move to that line and indent accordning to mode"
   :ensure t
   :mode "\\.nix\\'")
 
+(use-package magit
+  :ensure t
+  :bind
+  ("<f12>" . magit-status))
+
+(use-package evil-magit
+  :ensure t
+  :after magit)
+
 (provide 'base-edit)
 ;;; base-edit.el ends here
