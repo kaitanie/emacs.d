@@ -89,6 +89,7 @@ Then move to that line and indent accordning to mode"
   :ensure t
   :config
   (tool-bar-mode -1)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (evil-mode 1)
   (evil-define-key 'normal global-map
     (kbd "C-M-j") 'windmove-down
