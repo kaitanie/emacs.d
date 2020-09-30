@@ -44,10 +44,12 @@
 ;; Load configs
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 
+(require 'utils:sys "utils/sys")
 (load "base-edit.el")
 (require 'lang:elisp "lang/elisp")
 (require 'lang:purescript "lang/purescript")
 (require 'lang:ocaml "lang/ocaml")
+(require 'lang:haskell "lang/haskell")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -67,7 +69,7 @@
  '(merlin-completion-with-doc t)
  '(package-selected-packages
    (quote
-    (magit s dash-functional flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
+    (haskell-mode ag magit s dash-functional flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
  '(safe-local-variable-values
    (quote
     ((psc-ide-source-globs "src/**/*.purs" "test/**/*.purs" "examples/**/*.purs")

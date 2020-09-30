@@ -5,11 +5,12 @@
 
 (use-package cl)
 
-;; Haskell with eglot
+;; Eglot LSP integration
 (use-package eglot
   :ensure t
-  :config (progn
-            (add-to-list 'eglot-server-programs '(haskell-mode . ("ghcide" "--lsp")))))
+  :config
+  (progn
+    (add-to-list 'eglot-server-programs '(haskell-mode . ("ghcide" "--lsp")))))
 
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C-=") 'text-scale-increase)
@@ -203,6 +204,9 @@ Then move to that line and indent accordning to mode"
 (use-package evil-magit
   :ensure t
   :after magit)
+
+(use-package ag
+  :ensure t)
 
 (provide 'base-edit)
 ;;; base-edit.el ends here
