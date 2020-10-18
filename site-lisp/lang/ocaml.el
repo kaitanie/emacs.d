@@ -22,6 +22,9 @@
   :hook
   (tuareg-mode . merlin-mode)
   (merlin-mode . company-mode)
+  :config
+  (define-key evil-motion-state-map (kbd "g t") 'merlin-type-enclosing)
+  (define-key evil-motion-state-map (kbd "g d") 'merlin-document)
   :custom
   (merlin-command "ocamlmerlin"))
 

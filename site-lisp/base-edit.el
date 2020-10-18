@@ -10,7 +10,8 @@
   :ensure t
   :config
   (progn
-    (add-to-list 'eglot-server-programs '(haskell-mode . ("ghcide" "--lsp")))))
+   ;; (add-to-list 'eglot-server-programs '(haskell-mode . ("ghcide" "--lsp")))
+   (add-to-list 'eglot-server-programs '(haskell-mode . ("haskell-language-server" "--lsp")))))
 
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C-=") 'text-scale-increase)
