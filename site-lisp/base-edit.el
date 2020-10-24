@@ -11,7 +11,12 @@
   :config
   (progn
    ;; (add-to-list 'eglot-server-programs '(haskell-mode . ("ghcide" "--lsp")))
-   (add-to-list 'eglot-server-programs '(haskell-mode . ("haskell-language-server" "--lsp")))))
+    (add-to-list 'eglot-server-programs '(haskell-mode . ("haskell-language-server" "--lsp")))
+    (add-to-list 'eglot-server-programs '(rust-mode . ("rls")))
+    (add-to-list 'eglot-server-programs '(rustic . ("rls")))))
+
+;; LSP mode
+
 
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C-=") 'text-scale-increase)
