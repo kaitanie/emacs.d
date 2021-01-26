@@ -62,24 +62,21 @@
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(company-idle-delay 2.0)
- '(custom-enabled-themes (quote (abyss)))
+ '(custom-enabled-themes '(abyss))
  '(custom-safe-themes
-   (quote
-    ("3d4df186126c347e002c8366d32016948068d2e9198c496093a96775cc3b3eaa" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default)))
- '(flycheck-disabled-checkers (quote (haskell-stack-ghc haskell-ghc)))
+   '("3d4df186126c347e002c8366d32016948068d2e9198c496093a96775cc3b3eaa" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default))
+ '(flycheck-disabled-checkers '(haskell-stack-ghc haskell-ghc))
  '(global-flycheck-mode t)
  '(inhibit-startup-screen t)
  '(merlin-completion-with-doc t)
  '(package-selected-packages
-   (quote
-    (rustic rustic-mode haskell-mode ag magit s dash-functional flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor)))
- '(rustic-lsp-client (quote eglot))
- '(rustic-lsp-server (quote rls))
+   '(mu4e lsp-ivy rustic rustic-mode haskell-mode ag magit s dash-functional flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection evil-magit projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor))
+ '(rustic-lsp-client 'eglot)
+ '(rustic-lsp-server 'rls)
  '(safe-local-variable-values
-   (quote
-    ((psc-ide-source-globs "src/**/*.purs" "test/**/*.purs" "examples/**/*.purs")
+   '((psc-ide-source-globs "src/**/*.purs" "test/**/*.purs" "examples/**/*.purs")
      (haskell-process-use-ghci . t)
-     (haskell-indent-spaces . 4))))
+     (haskell-indent-spaces . 4)))
  '(show-paren-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

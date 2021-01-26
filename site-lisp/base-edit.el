@@ -25,7 +25,25 @@
     (add-to-list 'eglot-server-programs '(rustic . ("rls")))))
 
 ;; LSP mode
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          (rust-mode . lsp)
+;;          (haskell-mode . lsp)
+;;          ;; if you want which-key integration
+;;          (lsp-mode . lsp-enable-which-key-integration))
+;;   :commands lsp)
 
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :commands lsp-ui-mode)
+
+;; (use-package lsp-ivy
+;;   :ensure t
+;;   :commands lsp-ivy-workspace-symbol)
+
+;; (use-package lsp-haskell
+;;   :ensure t)
 
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C-=") 'text-scale-increase)
@@ -222,6 +240,24 @@ Then move to that line and indent accordning to mode"
 
 (use-package ag
   :ensure t)
+
+;; (use-package evil-collection :ensure t ;;  :config ;;  (evil-collection-init))
+
+;; Mu4e email
+(use-package mu4e
+  :config
+  (require 'mu4e)
+  (setq mu4e-contexts
+        `( ,(make-mu4e-context
+             :name "Gmail"
+             :match-func (lambda (msg) (when msg
+                                         (string-prefix-p "/PersonalGmail" (mu4e-message-field msg :maildir))))
+             :vars '(
+                     (mu4e-trash-folder . "/PersonalGmail/[Gmail].Trash")
+                     (mu4e-refile-folder . "/PersonalGmail/[Gmail].Archive")
+                     ))
+           )
+        ))
 
 (provide 'base-edit)
 ;;; base-edit.el ends here

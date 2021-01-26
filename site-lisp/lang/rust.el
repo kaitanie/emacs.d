@@ -7,7 +7,9 @@
 
 (use-package rust-mode
   :ensure t
-  :after eglot)
+  :after lsp-mode
+;;  :after eglot
+  )
 
 (provide 'lang:rust)
 ;;; haskell.el ends here
