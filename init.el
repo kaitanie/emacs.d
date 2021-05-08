@@ -65,6 +65,7 @@
  '(custom-enabled-themes '(abyss))
  '(custom-safe-themes
    '("3d4df186126c347e002c8366d32016948068d2e9198c496093a96775cc3b3eaa" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default))
+ '(eldoc-echo-area-prefer-doc-buffer t)
  '(flycheck-disabled-checkers '(haskell-stack-ghc haskell-ghc))
  '(global-flycheck-mode t)
  '(inhibit-startup-screen t)
