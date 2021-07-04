@@ -86,38 +86,39 @@ Then move to that line and indent accordning to mode"
   :after projectile
   :config (counsel-mode 1))
 
-(use-package yasnippet
-  :ensure t
-  :hook (prog-mode . yas-minor-mode)
-  :after cl
-  :config
-  (progn
-    (require 'cl)
-    (require 'yasnippet)
-    (defun yas-ido-expand ()
-      "Lets you select (and expand) a yasnippet key"
-      (interactive)
-      (let ((original-point (point)))
-        (while (and
-                (not (= (point) (point-min) ))
-                (not
-                 (string-match "[[:space:]\n]" (char-to-string (char-before)))))
-          (backward-word 1))
-        (let* ((init-word (point))
-               (word (buffer-substring init-word original-point))
-               (list (yas-active-keys)))
-          (goto-char original-point)
-          (let ((key (remove-if-not
-                      (lambda (s) (string-match (concat "^" word) s)) list)))
-            (if (= (length key) 1)
-                (setq key (pop key))
-              (setq key (ido-completing-read "key: " list nil nil word)))
-            (delete-char (- init-word original-point))
-            (insert key)
-            (yas-expand)))))
-    )
-  :bind
-  ("<C-tab>" . yas-ido-expand))
+;;(use-package yasnippet
+;;  :ensure t
+;;  :hook (prog-mode . yas-minor-mode)
+;;  :after cl
+;;  :config
+;;  (progn
+;;    (require 'cl)
+;;    (require 'yasnippet)
+;;    (defun yas-ido-expand ()
+;;      "Lets you select (and expand) a yasnippet key"
+;;      (interactive)
+;;      (let ((original-point (point)))
+;;        (while (and
+;;                (not (= (point) (point-min) ))
+;;                (not
+;;                 (string-match "[[:space:]\n]" (char-to-string (char-before)))))
+;;          (backward-word 1))
+;;        (let* ((init-word (point))
+;;               (word (buffer-substring init-word original-point))
+;;               (list (yas-active-keys)))
+;;          (goto-char original-point)
+;;          (let ((key (remove-if-not
+;;                      (lambda (s) (string-match (concat "^" word) s)) list)))
+;;            (if (= (length key) 1)
+;;                (setq key (pop key))
+;;              (setq key (ido-completing-read "key: " list nil nil word)))
+;;            (delete-char (- init-word original-point))
+;;            (insert key)
+;;            (yas-expand)))))
+;;    )
+;;  :bind
+;;  ("<C-tab>" . yas-ido-expand)
+;;  )
 
 (use-package evil
   :ensure t
@@ -234,9 +235,9 @@ Then move to that line and indent accordning to mode"
   :bind
   ("<f12>" . magit-status))
 
-(use-package evil-magit
-  :ensure t
-  :after magit)
+;; (use-package evil-magit
+;;   :ensure t
+;;   :after magit)
 
 (use-package ag
   :ensure t)
