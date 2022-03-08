@@ -3,7 +3,8 @@
 ;;(defun turn-on-paredit () (paredit-mode 1))
 
 (use-package cider
-  :ensure t)
+  :ensure t
+  :hook ((cider-repl-mode . company-mode)))
 
 (use-package clojure-mode
   :ensure t

@@ -127,6 +127,7 @@ Then move to that line and indent accordning to mode"
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (evil-mode 1)
   (evil-define-key 'normal global-map
+    (kbd "q") 'quit-window
     (kbd "C-M-j") 'windmove-down
     (kbd "C-M-k") 'windmove-up
     (kbd "C-M-h") 'windmove-left
