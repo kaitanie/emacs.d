@@ -243,6 +243,9 @@ Then move to that line and indent accordning to mode"
 (use-package ag
   :ensure t)
 
+(use-package csv-mode
+  :ensure t)
+
 ;; (use-package evil-collection :ensure t ;;  :config ;;  (evil-collection-init))
 
 ;; Mu4e email

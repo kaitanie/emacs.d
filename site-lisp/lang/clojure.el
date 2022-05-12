@@ -2,13 +2,18 @@
 ;; Clojure
 ;;(defun turn-on-paredit () (paredit-mode 1))
 
+(use-package flycheck-clj-kondo
+  :ensure t)
+
 (use-package cider
   :ensure t
   :hook ((cider-repl-mode . company-mode)))
 
 (use-package clojure-mode
   :ensure t
-  :mode ("\\.clj[cs]?$" . clojure-mode))
+  :mode ("\\.clj[cs]?$" . clojure-mode)
+  :config
+  (require 'flycheck-clj-kondo))
 
 (use-package paredit
   :ensure t

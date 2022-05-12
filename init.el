@@ -52,6 +52,7 @@
 (require 'lang:ocaml "lang/ocaml")
 (require 'lang:haskell "lang/haskell")
 (require 'lang:rust "lang/rust")
+(require 'lang:erlang "lang/erlang")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -73,7 +74,7 @@
  '(merlin-completion-with-doc t)
  '(org-indent-indentation-per-level 0)
  '(package-selected-packages
-   '(paredit cider clojure-mode ormolu mu4e lsp-ivy rustic rustic-mode haskell-mode ag magit s dash-functional flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor))
+   '(flycheck-clj-kondo erlang lfe-mode paredit cider clojure-mode ormolu mu4e lsp-ivy rustic rustic-mode haskell-mode ag magit s dash-functional flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor))
  '(rustic-lsp-client 'eglot)
  '(rustic-lsp-server 'rls)
  '(safe-local-variable-values
