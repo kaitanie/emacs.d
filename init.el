@@ -70,6 +70,7 @@
  '(eldoc-echo-area-prefer-doc-buffer t)
  '(flycheck-disabled-checkers '(haskell-stack-ghc haskell-ghc))
  '(global-flycheck-mode t)
+ '(global-undo-tree-mode t)
  '(inhibit-startup-screen t)
  '(merlin-completion-with-doc t)
  '(org-indent-indentation-per-level 0)
@@ -81,7 +82,9 @@
    '((psc-ide-source-globs "src/**/*.purs" "test/**/*.purs" "examples/**/*.purs")
      (haskell-process-use-ghci . t)
      (haskell-indent-spaces . 4)))
- '(show-paren-mode t))
+ '(show-paren-mode t)
+ '(undo-tree-auto-save-history nil)
+ '(undo-tree-visualizer-timestamps t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
