@@ -249,20 +249,20 @@ Then move to that line and indent accordning to mode"
 ;; (use-package evil-collection :ensure t ;;  :config ;;  (evil-collection-init))
 
 ;; Mu4e email
-(use-package mu4e
-  :config
-  (require 'mu4e)
-  (setq mu4e-contexts
-        `( ,(make-mu4e-context
-             :name "Gmail"
-             :match-func (lambda (msg) (when msg
-                                         (string-prefix-p "/PersonalGmail" (mu4e-message-field msg :maildir))))
-             :vars '(
-                     (mu4e-trash-folder . "/PersonalGmail/[Gmail].Trash")
-                     (mu4e-refile-folder . "/PersonalGmail/[Gmail].Archive")
-                     ))
-           )
-        ))
+;; (use-package mu4e
+;;   :config
+;;   (require 'mu4e)
+;;   (setq mu4e-contexts
+;;         `( ,(make-mu4e-context
+;;              :name "Gmail"
+;;              :match-func (lambda (msg) (when msg
+;;                                          (string-prefix-p "/PersonalGmail" (mu4e-message-field msg :maildir))))
+;;              :vars '(
+;;                      (mu4e-trash-folder . "/PersonalGmail/[Gmail].Trash")
+;;                      (mu4e-refile-folder . "/PersonalGmail/[Gmail].Archive")
+;;                      ))
+;;            )
+;;         ))
 
 (provide 'base-edit)
 ;;; base-edit.el ends here
