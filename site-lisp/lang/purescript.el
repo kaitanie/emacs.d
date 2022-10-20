@@ -28,13 +28,15 @@
   :ensure t)
 
 (use-package psc-ide
+  :ensure t
   :after dash dash-functional company s flycheck let-alist seq json
   :hook
   (purescript-mode . psc-ide-mode)
   :bind
   ("<f11>" . psc-ide-goto-definition)
-  :init
-  (add-to-list 'load-path "~/.emacs.d/vendor/psc-ide-emacs/"))
+  ;; :init
+  ;;  (add-to-list 'load-path "~/.emacs.d/vendor/psc-ide-emacs/")
+  )
 
 (provide 'lang:purescript)
 ;;; purescript.el ends here

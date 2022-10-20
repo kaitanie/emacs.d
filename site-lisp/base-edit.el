@@ -49,6 +49,14 @@
 (define-key global-map (kbd "C-=") 'text-scale-increase)
 (define-key global-map (kbd "C--") 'text-scale-decrease)
 
+(defun insert-umlaut-a ()
+  (interactive)
+  (insert "ä"))
+
+(defun insert-umlaut-o ()
+  (interactive)
+  (insert "ö"))
+
 (defun open-line-above ()
   "Open a line above the line the point is at.
 Then move to that line and indent accordning to mode"
