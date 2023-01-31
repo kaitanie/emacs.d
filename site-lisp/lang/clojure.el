@@ -12,6 +12,8 @@
 (use-package clojure-mode
   :ensure t
   :mode ("\\.clj[cs]?$" . clojure-mode)
+  :bind
+  (("C-M-z" . cider-load-buffer))
   :config
   (require 'flycheck-clj-kondo))
 

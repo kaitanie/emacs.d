@@ -76,6 +76,8 @@
  '(org-indent-indentation-per-level 0)
  '(package-selected-packages
    '(vterm psc-ide true flycheck-clj-kondo erlang lfe-mode paredit cider clojure-mode ormolu mu4e lsp-ivy rustic rustic-mode haskell-mode ag magit s dash-functional flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor))
+ '(projectile-globally-ignored-file-suffixes nil)
+ '(projectile-mode t nil (projectile))
  '(rustic-lsp-client 'eglot)
  '(rustic-lsp-server 'rls)
  '(safe-local-variable-values
@@ -84,7 +86,8 @@
      (haskell-indent-spaces . 4)))
  '(show-paren-mode t)
  '(undo-tree-auto-save-history nil)
- '(undo-tree-visualizer-timestamps t))
+ '(undo-tree-visualizer-timestamps t)
+ '(warning-suppress-types '((comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
