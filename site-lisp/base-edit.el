@@ -221,6 +221,7 @@ Then move to that line and indent accordning to mode"
   :config
   (define-key global-map "\C-cl" 'org-store-link)
   (define-key global-map "\C-ca" 'org-agenda)
+  (define-key global-map "\C-a" 'org-cycle)
   (setq org-log-done t))
 
 
