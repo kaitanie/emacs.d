@@ -6,7 +6,7 @@
 ;;   (setq rustic-lsp-client 'eglot))
 
 (use-package rust-mode
-  :ensure t
+  :ensure f
   :after lsp-mode
 ;;  :after eglot
   )
