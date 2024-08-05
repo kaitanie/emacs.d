@@ -63,6 +63,8 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(clojure-align-binding-forms
+   '("let" "when-let" "when-some" "if-let" "if-some" "binding" "loop" "doseq" "for" "with-open" "with-local-vars" "with-redefs" "plet"))
  '(company-idle-delay 2.0)
  '(custom-enabled-themes '(abyss))
  '(custom-safe-themes
@@ -75,21 +77,26 @@
  '(merlin-completion-with-doc t)
  '(org-indent-indentation-per-level 0)
  '(package-selected-packages
-   '(2bit 2048-game 0xc 0x0 0blayout f vterm psc-ide true flycheck-clj-kondo erlang lfe-mode paredit cider clojure-mode ormolu mu4e lsp-ivy rustic rustic-mode haskell-mode ag magit s dash-functional flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor))
+   '(aa-edit-mode a @ 750words 2bit 2048-game 0xc 0x0 0blayout f vterm psc-ide true flycheck-clj-kondo erlang lfe-mode paredit cider clojure-mode ormolu mu4e lsp-ivy rustic rustic-mode haskell-mode ag magit s dash-functional flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor))
  '(projectile-globally-ignored-file-suffixes nil)
  '(projectile-mode t nil (projectile))
  '(ring-bell-function 'ignore)
  '(rustic-lsp-client 'eglot)
  '(rustic-lsp-server 'rls)
  '(safe-local-variable-values
-   '((psc-ide-source-globs "src/**/*.purs" "test/**/*.purs" "examples/**/*.purs")
+   '((cider-repl-display-help-banner)
+     (cider-redirect-server-output-to-repl . t)
+     (cider-preferred-build-tool . clojure-cli)
+     (cider-clojure-cli-aliases . "")
+     (psc-ide-source-globs "src/**/*.purs" "test/**/*.purs" "examples/**/*.purs")
      (haskell-process-use-ghci . t)
      (haskell-indent-spaces . 4)))
  '(show-paren-mode t)
  '(undo-tree-auto-save-history nil)
  '(undo-tree-visualizer-timestamps t)
  '(visible-bell t)
- '(warning-suppress-types '((comp))))
+ '(warning-suppress-types '((comp)))
+ '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -105,6 +112,9 @@
 
 ;; No tabs
 (setq-default indent-tabs-mode nil)
+
+;; No dir-locals
+(setq enable-dir-local-variables nil)
 
 (defun exitmessage ()
   "Exit message"

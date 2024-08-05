@@ -139,6 +139,18 @@ Then move to that line and indent accordning to mode"
     (kbd "C-M-j") 'windmove-down
     (kbd "C-M-k") 'windmove-up
     (kbd "C-M-h") 'windmove-left
+    (kbd "C-M-l") 'windmove-right)
+  (evil-define-key 'insert global-map
+    (kbd "q") 'quit-window
+    (kbd "C-M-j") 'windmove-down
+    (kbd "C-M-k") 'windmove-up
+    (kbd "C-M-h") 'windmove-left
+    (kbd "C-M-l") 'windmove-right)
+  (evil-define-key 'emacs global-map
+    (kbd "q") 'quit-window
+    (kbd "C-M-j") 'windmove-down
+    (kbd "C-M-k") 'windmove-up
+    (kbd "C-M-h") 'windmove-left
     (kbd "C-M-l") 'windmove-right))
 
 (use-package swiper
