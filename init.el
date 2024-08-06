@@ -63,10 +63,12 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(clojure-align-binding-forms
+   '("let" "when-let" "when-some" "if-let" "if-some" "binding" "loop" "doseq" "for" "with-open" "with-local-vars" "with-redefs" "plet"))
  '(company-idle-delay 2.0)
  '(custom-enabled-themes '(abyss))
  '(custom-safe-themes
-   '("3d4df186126c347e002c8366d32016948068d2e9198c496093a96775cc3b3eaa" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default))
+   '("7d1c7ea4f3e73402f012b7011fc4be389597922fa67ad4ec417816971bca6f9d" "3d4df186126c347e002c8366d32016948068d2e9198c496093a96775cc3b3eaa" "d8dc153c58354d612b2576fea87fe676a3a5d43bcc71170c62ddde4a1ad9e1fb" "dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default))
  '(eldoc-echo-area-prefer-doc-buffer t)
  '(flycheck-disabled-checkers '(haskell-stack-ghc haskell-ghc))
  '(global-flycheck-mode t)
@@ -75,24 +77,26 @@
  '(merlin-completion-with-doc t)
  '(org-indent-indentation-per-level 0)
  '(package-selected-packages
-   '(slime 2bit 2048-game 0xc 0x0 0blayout vterm psc-ide true flycheck-clj-kondo erlang lfe-mode paredit cider clojure-mode ormolu mu4e lsp-ivy rustic rustic-mode haskell-mode ag magit s dash-functional flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor))
+   '(aa-edit-mode a @ 750words 2bit 2048-game 0xc 0x0 0blayout f vterm psc-ide true flycheck-clj-kondo erlang lfe-mode paredit cider clojure-mode ormolu mu4e lsp-ivy rustic rustic-mode haskell-mode ag magit s dash-functional flycheck-rust cargo toml-mode lsp-ui javascript-eslint web-mode wand lsp-haskell lsp-mode company-lsp rust-mode highlight-indentation highlight-indent-guides-mode markdown-mode nix-mode counsel swiper ivy use-package csv-mode overcast-theme flycheck evil-lisp-state evil-collection projectile evil abyss-theme xkcd utop undo-tree typed-clojure-mode systemd sos react-snippets rainbow-mode opam magit-gitflow lusty-explorer jsx-mode haskell-snippets hackernews gist flx-ido company-ghc company-cabal clojure-snippets clj-refactor))
  '(projectile-globally-ignored-file-suffixes nil)
  '(projectile-mode t nil (projectile))
  '(ring-bell-function 'ignore)
  '(rustic-lsp-client 'eglot)
  '(rustic-lsp-server 'rls)
  '(safe-local-variable-values
-   '((cider-redirect-server-output-to-repl . t)
+   '((cider-repl-display-help-banner)
+     (cider-redirect-server-output-to-repl . t)
      (cider-preferred-build-tool . clojure-cli)
      (cider-clojure-cli-aliases . "")
-     (cider-repl-display-help-banner)
      (psc-ide-source-globs "src/**/*.purs" "test/**/*.purs" "examples/**/*.purs")
      (haskell-process-use-ghci . t)
      (haskell-indent-spaces . 4)))
  '(show-paren-mode t)
  '(undo-tree-auto-save-history nil)
  '(undo-tree-visualizer-timestamps t)
- '(warning-suppress-types '((comp))))
+ '(visible-bell t)
+ '(warning-suppress-types '((comp)))
+ '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -109,6 +113,9 @@
 ;; No tabs
 (setq-default indent-tabs-mode nil)
 
+;; No dir-locals
+(setq enable-dir-local-variables nil)
+
 (defun exitmessage ()
   "Exit message"
   (interactive)
@@ -117,6 +124,11 @@
 ;; Disable C-c C-x
 (global-set-key (kbd "C-x C-c") 'exitmessage)
 
+(defun my-toggle-wrapping ()
+  "Toggle both auto fill and visual line modes."
+  (interactive)
+  (auto-fill-mode 'toggle)
+  (visual-line-mode 'toggle))
 
 ;; Theme
 ;;(lush-theme)
