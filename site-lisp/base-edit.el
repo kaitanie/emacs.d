@@ -283,5 +283,8 @@ Then move to that line and indent accordning to mode"
 ;;            )
 ;;         ))
 
+;; SQL-Postgres
+(setq sql-postgres-login-params (append sql-postgres-login-params '(port)))
+
 (provide 'base-edit)
 ;;; base-edit.el ends here
